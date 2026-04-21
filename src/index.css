@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 20% 4%;
+    --foreground: 210 20% 95%;
+
+    --card: 220 20% 6%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 220 20% 6%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 220 20% 4%;
+
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 210 20% 95%;
+
+    --muted: 220 15% 15%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 220 20% 4%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 15%;
+    --input: 220 15% 15%;
+    --ring: 25 95% 53%;
+
+    --radius: 0.5rem;
+
+    /* Custom electric theme tokens */
+    --electric-blue: 25 95% 53%;
+    --electric-cyan: 33 100% 50%;
+    --electric-glow: 25 95% 60%;
+    --neutral-950: 220 20% 4%;
+    --neutral-900: 220 15% 8%;
+    --neutral-800: 220 15% 12%;
+    --neutral-700: 220 12% 20%;
+    --neutral-600: 215 12% 35%;
+    --neutral-500: 215 10% 50%;
+    --neutral-400: 215 10% 65%;
+    --neutral-300: 210 15% 80%;
+    --neutral-200: 210 20% 90%;
+    
+    /* Gradients */
+    --gradient-electric: linear-gradient(135deg, hsl(25 95% 53%), hsl(33 100% 50%));
+    --gradient-dark: linear-gradient(180deg, hsl(var(--neutral-950)), hsl(var(--neutral-900)));
+    
+    /* Shadows */
+    --shadow-electric: 0 0 30px -10px hsl(25 95% 53% / 0.5);
+    --shadow-glow: 0 0 60px -20px hsl(25 95% 53% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient-electric {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-electric);
+  }
+  
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .glow-electric {
+    box-shadow: var(--shadow-electric);
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px -10px hsl(25 95% 53% / 0.5);
+    }
+    to {
+      box-shadow: 0 0 40px -10px hsl(25 95% 53% / 0.8);
+    }
+  }
+
+  .line-decoration {
+    @apply relative;
+  }
+  
+  .line-decoration::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-0 bg-gradient-to-r from-transparent via-primary to-transparent transition-all duration-500;
+  }
+  
+  .line-decoration:hover::after {
+    @apply w-full;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .min-h-screen {
+      min-height: 100vh;
+    }
+    
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+  }
+}
