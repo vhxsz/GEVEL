@@ -32,25 +32,41 @@ Site institucional/portfólio da **GEVEL**, empresa de engenharia elétrica indu
 ### Página GEVEL (`/`) — `src/pages/Gevel.tsx`
 Seções em ordem:
 1. `<Header />` — fixo, transparente → blur ao scroll
-2. `#sobre` → `<GevelHero />` — hero com MeshGradient animado + PulsingBorder
-3. `#servicos` → CardStack animado com 5 serviços (auto-advance 3s)
+2. `#sobre` → `<GevelHero />` — hero com MeshGradient animado + PulsingBorder (hidden mobile)
+3. `#servicos` → CardStack animado com 5 serviços (auto-advance 3s) + decorações laranja
 4. Seção do engenheiro — bio + stats + foto + links
 5. `#contato` — CTA com e-mail e WhatsApp
 6. `<Footer />` — links de navegação + redes sociais
 
 ### Página Gelber (`/gelber`) — `src/pages/Index.tsx`
 Portfólio pessoal com:
-- `<Hero />` — apresentação pessoal com stats (10+ anos, 150+ projetos, 50+ clientes)
+- `<Hero />` — apresentação pessoal com imagem mobile visível (420×380), stats (10+ anos, 150+ projetos, 50+ clientes)
 - `<Projects />` — lista interativa com hover/floating image preview
 - `<Services />` — grid 3 colunas com 6 serviços
 - `<Experience />`, `<Contact />`, `<Footer />`
 
 ### Componentes Principais
-- **`Header`** (`src/components/Header.tsx`): detecta rota atual, alterna navLinks entre GEVEL e Gelber, CTA "Solicitar Orçamento" na rota `/`
-- **`GevelHero`** (`src/components/ui/gevel-hero.tsx`): MeshGradient + PulsingBorder + texto animado bottom-left + stats top-right
-- **`FullScreenScrollFX`** (`src/components/ui/full-screen-scroll-fx.tsx`): componente de scroll fullscreen com GSAP ScrollTrigger, suporta labels esquerda/direita, transição fade/wipe
+- **`Header`** (`src/components/Header.tsx`):
+  - Detecta rota atual, alterna navLinks entre GEVEL e Gelber
+  - CTA "Solicitar Orçamento" na rota `/`
+  - Logo `h-20` sem texto "GEVEL."
+  - **Mobile:** botão hambúrguer animado (3 linhas → X com spring) no canto direito
+  - **Menu mobile:** painel glassmorphism flutuante `right-4 top-4`, `w-72`, `backdrop-blur-2xl`, com backdrop escuro clicável, links com stagger e CTA laranja
+- **`GevelHero`** (`src/components/ui/gevel-hero.tsx`):
+  - MeshGradient + PulsingBorder (hidden mobile com `hidden md:block`)
+  - Texto animado bottom-left + stats top-right (hidden mobile)
+  - Gradiente de fade `from-card to-transparent h-40` na base para transição suave
+- **`FullScreenScrollFX`** (`src/components/ui/full-screen-scroll-fx.tsx`): scroll fullscreen com GSAP ScrollTrigger
 - **`CardStack`** (`src/components/ui/card-stack.tsx`): carrossel empilhado com auto-advance
-- **`Footer`** (`src/components/ui/footer-section.tsx`): 4 colunas (Serviços, Empresa, Recursos, Redes Sociais)
+  - Mobile: `cardWidth=Math.min(width-120, 220)`, `cardHeight=150`, `maxVisible=5`, `spreadDeg=36`
+  - Desktop: `cardWidth=520`, `cardHeight=320`
+- **`Footer`** (`src/components/ui/footer-section.tsx`): 4 colunas + glow laranja atrás no mobile (`z-index:-1`)
+
+## Decorações Visuais — Section "Expertise Técnica" (`#servicos`)
+- Dois arcos concêntricos laranja no topo (`border-primary/10` e `/15`)
+- Glow difuso laranja central (`blur-[80px]`, `bg-primary/8`)
+- Linha fina laranja no topo (`via-primary/40`)
+- Texto "GEVEL" gigante marca d'água no canto inferior direito (`text-primary/[0.04]`, `text-[14rem]`)
 
 ## Serviços da GEVEL
 1. Projetos Elétricos Industriais
@@ -77,9 +93,15 @@ Portfólio pessoal com:
 | 05 | Usina Solar Fotovoltaica | Energia Renovável |
 
 ## Contato / Links
-- E-mail: `contato@gevel.com.br`
-- WhatsApp: `https://wa.me/5500000000000` (placeholder — atualizar)
-- LinkedIn: `https://www.linkedin.com/in/gelber-amaral-2bb5a550/`
+- **E-mail Gelber:** `gelberamaral@gmail.com`
+- **Telefone Gelber:** `(21) 96707-5858` / `tel:+5521967075858`
+- **Localização Gelber:** Nova Iguaçu, Brasil
+- **E-mail GEVEL:** `contato@gevel.com.br`
+- **WhatsApp GEVEL:** `https://wa.me/5500000000000` (placeholder — atualizar)
+- **LinkedIn:** `https://www.linkedin.com/in/gelber-amaral-2bb5a550/`
+
+## Favicon
+- Arquivo: `/favicon.png` (definido em `index.html`)
 
 ## Convenções de Código
 - Componentes em PascalCase, arquivos `.tsx`
@@ -88,3 +110,11 @@ Portfólio pessoal com:
 - Seções com `id` em português minúsculo: `#sobre`, `#servicos`, `#projetos`, `#contato`
 - Imagens via Unsplash (URLs diretas) — substituir por assets reais em produção
 - Sem modo claro — não adicionar toggle de tema
+- `overflow-x: hidden` em `html` e `body` (index.css) + containers principais
+
+## Fixes Mobile Aplicados
+- Scroll horizontal corrigido: `overflow-x-hidden` no html/body/containers
+- Section serviços com `overflow-hidden` para conter CardStack
+- Imagem do eletricista visível no mobile em `Hero.tsx` (`max-w-[420px] h-[380px]`)
+- PulsingBorder + texto rotativo ocultos no mobile (`hidden md:block`)
+- CardStack menor no mobile para bordas arredondadas visíveis

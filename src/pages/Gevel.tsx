@@ -51,7 +51,9 @@ const Gevel = () => {
       </div>
 
       {/* Serviços */}
-      <section id="servicos" className="relative w-full bg-card py-16 px-4 md:py-24 md:px-12 overflow-hidden">
+      <section id="servicos" className="relative w-full bg-background py-32 px-4 md:py-40 md:px-12 overflow-hidden">
+        {/* Fade top */}
+        <div className="pointer-events-none absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-0 bg-noise opacity-[0.02] mix-blend-overlay" />
 
         {/* Decoração laranja — arco superior */}
@@ -91,7 +93,7 @@ const Gevel = () => {
       </section>
 
       {/* Engenheiro */}
-      <section className="relative w-full bg-background py-16 px-6 md:px-12 overflow-hidden">
+      <section className="relative w-full bg-background py-32 px-6 md:py-40 md:px-12 overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--electric-blue)/0.1),transparent_50%)]" />
         <div className="pointer-events-none absolute inset-0 bg-noise opacity-[0.03] mix-blend-overlay" />
 
@@ -199,7 +201,8 @@ const Gevel = () => {
       </section>
 
       {/* Contato */}
-      <section id="contato" className="relative w-full bg-card py-16 px-6 md:py-24 md:px-12 overflow-hidden">
+      <section id="contato" className="relative w-full bg-background py-32 px-6 md:py-40 md:px-12 overflow-hidden">
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10" />
         <div className="pointer-events-none absolute inset-0 bg-noise opacity-[0.02] mix-blend-overlay" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,hsl(var(--electric-blue)/0.08),transparent_60%)]" />
 
@@ -211,4 +214,31 @@ const Gevel = () => {
             Vamos fazer seu <span className="text-gradient-electric">projeto</span> acontecer
           </h2>
           <p className="text-sm md:text-base text-muted-foreground mb-10 max-w-xl mx-auto">
-            Entre em contato para discutir seu projeto elétrico industrial. Respondemos em até 24
+            Entre em contato para discutir seu projeto elétrico industrial. Respondemos em até 24 horas.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="mailto:gelberamaral@gmail.com?subject=Solicita%C3%A7%C3%A3o%20de%20Or%C3%A7amento%20-%20GEVEL&body=Ol%C3%A1%20Gelber%2C%0A%0AGostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%3A%0A%0A"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-primary bg-primary/10 px-8 py-4 text-sm font-medium text-primary transition-all hover:bg-primary hover:text-primary-foreground glow-electric"
+            >
+              Enviar E-mail
+            </a>
+            <a
+              href="https://wa.me/5521967075858?text=Ol%C3%A1%20Gelber%2C%20vim%20pelo%20site%20da%20GEVEL%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-8 py-4 text-sm font-medium text-foreground transition-all hover:border-primary/50 hover:text-primary"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Gevel;

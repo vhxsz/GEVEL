@@ -1,18 +1,22 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Linkedin, Send } from 'lucide-react';
 import { useState } from 'react';
+import { sendToTelegram } from '@/lib/telegram';
 
 export default function Contact() {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formState);
+    setStatus('loading');
+    try {
+      await sendToTelegram(formState);
+      setStatus('success');
+      setFormState({ name: '', email: '', message: '' });
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -49,7 +53,7 @@ export default function Contact() {
               className="space-y-6"
             >
               <a
-                href="mailto:gelber.lucio@email.com"
+                href="mailto:gelberamaral@gmail.com"
                 className="group flex items-center gap-4 rounded-xl border border-border bg-background p-4 transition-all hover:border-primary/30"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors group-hover:border-primary group-hover:text-primary">
@@ -57,12 +61,12 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">Email</p>
-                  <p className="font-medium text-foreground">gelber.lucio@email.com</p>
+                  <p className="font-medium text-foreground">gelberamaral@gmail.com</p>
                 </div>
               </a>
 
               <a
-                href="tel:+5511999999999"
+                href="tel:+5521967075858"
                 className="group flex items-center gap-4 rounded-xl border border-border bg-background p-4 transition-all hover:border-primary/30"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors group-hover:border-primary group-hover:text-primary">
@@ -70,7 +74,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">Telefone</p>
-                  <p className="font-medium text-foreground">(11) 99999-9999</p>
+                  <p className="font-medium text-foreground">(21) 96707-5858</p>
                 </div>
               </a>
 
@@ -80,7 +84,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-wider text-muted-foreground">Localização</p>
-                  <p className="font-medium text-foreground">São Paulo, Brasil</p>
+                  <p className="font-medium text-foreground">Nova Iguaçu, Brasil</p>
                 </div>
               </div>
 
@@ -147,11 +151,18 @@ export default function Contact() {
                 />
               </div>
 
+              {status === 'success' && (
+                <p className="text-sm text-green-400 text-center">✅ Mensagem enviada com sucesso!</p>
+              )}
+              {status === 'error' && (
+                <p className="text-sm text-red-400 text-center">❌ Erro ao enviar. Tente novamente.</p>
+              )}
               <button
                 type="submit"
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-primary bg-primary px-6 py-4 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 glow-electric"
+                disabled={status === 'loading'}
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl border border-primary bg-primary px-6 py-4 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 glow-electric disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Enviar Mensagem
+                {status === 'loading' ? 'Enviando...' : 'Enviar Mensagem'}
                 <Send className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
             </form>
